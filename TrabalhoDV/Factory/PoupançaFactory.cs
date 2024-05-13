@@ -17,6 +17,7 @@ namespace TrabalhoDV.Factory
             else
             {
                 conta.saldo += valor;
+                Console.WriteLine("O depósito no valor de R$" + valor + " foi bem sucedido");
                 return true;
 
             }
@@ -33,6 +34,7 @@ namespace TrabalhoDV.Factory
             else
             {
                 conta.saldo -= valor;
+                Console.WriteLine("O saque no valor de R$" + valor + " foi bem sucedido");
                 return true;
             }
 
@@ -49,6 +51,7 @@ namespace TrabalhoDV.Factory
             {
                 conta_O.saldo -= valor;
                 conta_D.saldo += valor;
+                Console.WriteLine("A transferência no valor de R$" + valor + " foi bem sucedida");
                 return true;
             }
 
