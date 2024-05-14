@@ -1,0 +1,15 @@
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\bin\Debug\net8.0\TrabalhoDV.exe
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\bin\Debug\net8.0\TrabalhoDV.deps.json
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\bin\Debug\net8.0\TrabalhoDV.runtimeconfig.json
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\bin\Debug\net8.0\TrabalhoDV.dll
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\bin\Debug\net8.0\TrabalhoDV.pdb
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.AssemblyInfoInputs.cache
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.AssemblyInfo.cs
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.csproj.CoreCompileInputs.cache
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.dll
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\refint\TrabalhoDV.dll
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.pdb
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.genruntimeconfig.cache
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\ref\TrabalhoDV.dll
+C:\Users\Loure\source\repos\TrabalhoDV\TrabalhoDV\obj\Debug\net8.0\TrabalhoDV.sourcelink.json
