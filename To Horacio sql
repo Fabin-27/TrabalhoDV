@@ -1,146 +1,92 @@
--- CRIAÇÃO DAS TABELAS
+create table Agencia(
 
-create table Cliente ( 
-Id_Cliente int not null identity primary key,
-Nome_Cliente varchar(100) not null
+id_agencia int identity primary key,
+nome varchar(100) not null,
+numero_agencia bigint unique not null
 );
 
-create table Vendedor (
-Id_Vendedor int not null identity primary key,
-Nome_Vendedor varchar(100) not null
+create table Correntista(
+
+id_correntista int identity primary key,
+nome varchar(50) not null,
+cpf bigint unique not null
 );
 
-create table Produto (
-Id_Produto int not null identity primary key,
-Nome_Produto varchar(100) not null,
-Preço_Produto varchar(100) not null
+create table Extrato(
+
+id_extrato int identity primary key,
+valor float not null,
+data date not null,
+agencia_O bigint not null,
+agencia_D bigint not null,
 );
 
-create table Venda (
-Id_Venda int not null identity primary key,
-Cliente_Id int not null,
-Vendedor_Id int not null,
-Data date not null,
-total float not null,
-foreign key (Cliente_Id) references Cliente(Id_Cliente),
-foreign key (Vendedor_Id) references Vendedor(Id_Vendedor)
+create table Conta(
+
+id_conta int identity primary key,
+tipo char(1) not null,
+numero_conta bigint unique not null,
+saldo float not null,
+agencia_id int not null,
+correntista_id int not null,
+extrato_id int not null,
+foreign key (agencia_id) references Agencia(id_agencia),
+foreign key (correntista_id) references Correntista(id_correntista),
+foreign key (extrato_id) references Extrato(id_extrato)
 );
 
-create table VendaProduto(
-Venda_Id int not null,
-Produto_Id int not null,
-Preço float not null,
-Quantidade int not null,
-Total float not null,
-primary key (Venda_Id, Produto_Id),
-foreign key (Venda_Id) references Venda(Id_Venda),
-foreign key (Produto_Id) references Produto(Id_Produto)
-);
+insert into Agencia values ('Rio de Janeiro', 17849);
+insert into Agencia values ('São Paulo', 93745);
+insert into Agencia values ('Minas Gerais', 12345);
+insert into Agencia values ('Espirito Santo', 67894);
+insert into Agencia values ('Bahia', 55377);
+insert into Agencia values ('Amazonia', 91827);
+insert into Agencia values ('Pará', 29887);
 
--- POPULANDO AS TABELAS
+insert into Correntista values ('Ian', 12345678987);
+insert into Correntista values ('Fabio', 12345618987);
+insert into Correntista values ('Kariny', 12315678987);
+insert into Correntista values ('Gustavo', 12345678917);
+insert into Correntista values ('Horacio', 12341678987);
+insert into Correntista values ('Miguel', 32345678987);
+insert into Correntista values ('Davi', 12345478917);
 
-insert into Cliente (Nome_Cliente)
-values
-('Pedro'),
-('Carlos'),
-('Joao'),
-('Anderson'),
-('Gabriel'),
-('Enzo'),
-('Rodrigo')
-;
+insert into Extrato values (250.0, '15/09/2023', 1234, 1892);
+insert into Extrato values (250.0, '17/08/2023', 4321, 5918);
+insert into Extrato values (250.0, '19/09/2023', 5678, 3746);
+insert into Extrato values (250.0, '20/07/2023', 8765, 1928);
+insert into Extrato values (250.0, '10/01/2023', 9876, 6789);
+insert into Extrato values (250.0, '01/05/2023', 3746, 4321);
+insert into Extrato values (250.0, '02/02/2023', 1928, 9876);
+insert into Extrato values (250.0, '11/10/2023', 5918, 4321);
+insert into Extrato values (250.0, '12/06/2023', 3746, 1234);
+insert into Extrato values (250.0, '16/07/2023', 1892, 9876);
+insert into Extrato values (250.0, '23/03/2023', 6789, 9876);
 
+insert into Conta values('c',1234, 215.6, 7, 1, 1);
+insert into Conta values('s',5678, 5000.6, 2, 2, 3);
+insert into Conta values('c',8765, 300.6, 5, 3, 4);
+insert into Conta values('s',9876, 5000.6, 4, 4, 5);
+insert into Conta values('c',6789, 456.6, 6, 5, 11);
+insert into Conta values('s',1928, 5000.6, 1, 6, 7);
+insert into Conta values('c',3746, 550.6, 1, 7, 9);
+insert into Conta values('p',5918, 3000.6, 3, 2, 8);
+insert into Conta values('p',4321, 18000.6, 7, 4, 2);
+insert into Conta values('p',1892, 5000.6, 1, 6, 10);
 
-insert into Vendedor (Nome_Vendedor)
-values 
-('Biel'),
-('Douglas'),
-('Ana'),
-('Pietro'),
-('Arthur'),
-('Giovana'),
-('Gleyce')
-;
+select c.nome as nome_Cliente , a.nome as agencia, a.numero_agencia, t.tipo, t.saldo 
+from Conta as t
+inner join Correntista as c
+on id_correntista = correntista_id
+inner join Agencia as a
+on id_agencia = agencia_id;
 
-insert into Produto (Nome_Produto, Preço_Produto)
-values
-('Lapis', 2.00),
-('Lapiseira', 4.00),
-('Caneta', 2.50),
-('Regua', 5.00),
-('Cartolina', 3.50),
-('Caderno', 10.00),
-('Borracha', 4.00)
-;
+create view Tabelas as
+select c.nome as nome_Cliente , a.nome as agencia, a.numero_agencia, t.tipo, t.saldo 
+from Conta as t
+inner join Correntista as c
+on id_correntista = correntista_id
+inner join Agencia as a
+on id_agencia = agencia_id;
 
-insert into Venda (Cliente_Id,Vendedor_Id, Data, Total)
-Values 
-(5, 4, '2023-09-06', 10.00),
-(7, 5, '2023-09-07', 20.00),
-(2, 7, '2023-09-08', 30.00),
-(1, 2, '2023-09-09', 40.00),
-(3, 2, '2023-09-10', 50.00),
-(2, 1, '2023-09-11', 60.00),
-(7, 1, '2023-09-12', 70.00),
-(1, 3, '2023-09-13', 80.00),
-(2, 4, '2023-09-14', 25.00),
-(4, 3, '2023-09-15', 15.00),
-
-(1, 4, '2023-09-05', 10.00),
-(2, 1, '2023-09-05', 20.00),
-(3, 7, '2023-09-05', 70.00),
-(4, 5, '2023-09-05', 50.00),
-(5, 3, '2023-09-05', 40.00),
-(6, 6, '2023-09-05', 35.00),
-(7, 2, '2023-09-05', 7.00)
-; 
-
-select * from Venda
-
-insert into VendaProduto (Venda_Id, Produto_Id, Preço, Quantidade, Total)
-values 
-(31, 2, 2.00, 5, 10.00),
-(32, 4, 5.00, 4, 20.00),
-(33, 1, 2.00, 15, 30.00),
-(34, 2, 4.00, 10, 40.00),
-(35, 4, 5.00, 10, 50.00),
-(36, 6, 10.00, 6, 60.00),
-(37, 6, 10.00, 7, 70.00),
-(38, 6, 10.00, 8, 80.00),
-(39, 6, 10.00, 9, 90.00),
-(40, 2, 3.50, 2, 7.00),
-(24, 1, 2.00, 5, 10.00),
-(25, 6, 10.00, 2, 20.00),
-(26, 6, 10.00, 7, 70.00),
-(27, 4, 5.00, 10, 50.00),
-(28, 2, 4.00, 10, 40.00),
-(29, 5, 3.50, 10, 35.00),
-(30, 5, 3.50, 2, 7.00)
-;
-
--- LETRA A
-select Cliente_Id, SUM(total) as Total_Vendido_Cliente from Venda group by Cliente_Id
-
--- LETRA B
-select Vendedor_Id, SUM(total) from Venda group by Vendedor_Id
-
--- LETRA C
-select p.Nome_Produto, AVG(v.Quantidade) as Vendas_por_Produtos 
-from Produto as p
-join VendaProduto as v
-on p.Id_Produto = v.Produto_Id
-Group by p.Nome_Produto
-
--- LETRA D
-select AVG(Total) as Vendas_por_Data,
-DAY(Data) as Dia, MONTH(Data) as Mês, YEAR(Data) as Ano
-from Venda
-Group by Data
-
--- LETRA E
-select p.Nome_Produto, c.Nome_Cliente 
-from Produto as p
-join Cliente as c 
-on p.Id_Produto = c.Id_Cliente
-Order by Nome_Produto
-
+select * from Tabelas
