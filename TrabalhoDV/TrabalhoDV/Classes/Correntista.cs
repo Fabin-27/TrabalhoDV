@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrabalhoDV.Classes
 {
-    internal class Correntista
+    internal class Correntista : Conta
     {
 
         public double Codigo;
@@ -18,6 +18,10 @@ namespace TrabalhoDV.Classes
         {
         }
 
+        public Correntista(double saldo, double agencia, int numero_C) : base(saldo, agencia, numero_C)
+        {
+        }
+
         public Correntista(double codigo, string nome, double cPF, double telefone)
         {
             Codigo = codigo;
@@ -25,5 +29,7 @@ namespace TrabalhoDV.Classes
             CPF = cPF;
             Telefone = telefone;
         }
+
+ 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TrabalhoDV.Factory;
@@ -9,24 +10,32 @@ namespace TrabalhoDV.Classes
 {
     class Menu
     {
+
+        Random aleatorio = new Random();
+
+        Correntista ct = new Correntista();
+
         bool loope1 = true;
         bool loope2 = true;
         bool loope3 = true;
         bool loope4 = true;
+
         
         CorrenteFactory Conta_Davi_M = new CorrenteFactory();
         PoupançaFactory Conta_Davi_N = new PoupançaFactory();
+        Conta Conta_Davi_C = new Conta();
+        Conta Conta_Davi_P = new Conta();
 
-        Conta Conta_Davi_C = new Conta(2500.00, 9375, 6234 - 9);
-        Conta Conta_Davi_P = new Conta(30000.00, 1234, 9876 - 5); 
 
         
 
         public void Inicializar()
         {
-            
-            Console.WriteLine("Bem vindo ao Banco Pitagoras");
-            Console.WriteLine();
+
+            int randomNumber_Agencia = aleatorio.Next(50000, 100000);
+            Console.WriteLine("Número da Conta: " + randomNumber_Agencia);
+
+
             Console.WriteLine("Escolha uma opção:");
             Console.WriteLine();
             Console.WriteLine("(1) Operações");
@@ -44,11 +53,12 @@ namespace TrabalhoDV.Classes
 
                     case 1:
 
-                        
+
 
                         while (loope1)
                         {
 
+                            Console.Clear();
                             Console.WriteLine("Escolha a conta que deseja operar:");
                             Console.WriteLine("(1) Corrente");
                             Console.WriteLine("(2) Poupança");
@@ -65,6 +75,8 @@ namespace TrabalhoDV.Classes
                                 {
 
                                     case 1:
+
+                                        Console.Clear();
                                         Console.WriteLine("Escolha a operação desejada");
                                         Console.WriteLine();
                                         Console.WriteLine("(1) deposito");
@@ -124,6 +136,7 @@ namespace TrabalhoDV.Classes
 
                                     case 2:
 
+                                        Console.Clear();
                                         Console.WriteLine("Escolha a operação desejada");
                                         Console.WriteLine();
                                         Console.WriteLine("(1) deposito");
@@ -198,17 +211,15 @@ namespace TrabalhoDV.Classes
 
                     case 2:
 
+                        Console.Clear();
                         OpçãoCorentista();
 
                         break;
 
                     case 3:
 
-                        Console.WriteLine("Informações Bnacárias: ");
-
-                        Console.WriteLine("");
-
-
+                        Console.Clear();
+                        InformacoesBancarias();
 
                         break;
 
@@ -217,6 +228,7 @@ namespace TrabalhoDV.Classes
             }
 
         }
+
 
         private void OpçãoCorentista()
         {
@@ -255,7 +267,7 @@ namespace TrabalhoDV.Classes
 
                     case 4:
 
-                        Inicializar();
+                       Inicializar();
 
                         break;
                 }
@@ -263,28 +275,38 @@ namespace TrabalhoDV.Classes
             }
 
         }
+        
         private void CadastrarCorrentista()
         {
 
-            Correntista ct = new Correntista();
             Console.WriteLine("Informe o código");
             ct.Codigo = double.Parse(Console.ReadLine());
+
             Console.WriteLine("Informe o Nome");
             ct.Nome = Console.ReadLine();
+
             Console.WriteLine("Informe o CPF");
             ct.CPF = double.Parse(Console.ReadLine());
+
             Console.WriteLine("Informe o Telefone");
             ct.Telefone = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Agencia: " + ct.agencia);
+            int randomNumber_Agencia = aleatorio.Next(50000, 100000);
+            Console.WriteLine("Número da Conta: " + randomNumber_Agencia);
+
+            Console.WriteLine("Seu saldo atual é " + ct.saldo);
+
         }
 
         private void EditarCorrentista()
         {
 
-            Correntista ct = new Correntista();
+            
             Console.WriteLine("Codigo:" + ct.Codigo);
             Console.WriteLine("Nome: " + ct.Nome);
-            Console.WriteLine("Nome: " + ct.CPF);
-            Console.WriteLine("Nome: " + ct.Telefone);
+            Console.WriteLine("CPF: " + ct.CPF);
+            Console.WriteLine("Telefone: " + ct.Telefone);
 
             Console.WriteLine("Qual deseja alterar?");
             Console.WriteLine("(1) Telefone");
@@ -296,11 +318,14 @@ namespace TrabalhoDV.Classes
             {
                 Console.WriteLine("Digite o novo telefone: ");
                 ct.Telefone = double.Parse(Console.ReadLine());
+                Console.WriteLine("Telefone alterado com sucesso!");
+
             }
             else if (i == 2)
             {
                 Console.WriteLine("Digite o novo Nome: ");
                 ct.Nome = Console.ReadLine();
+                Console.WriteLine("Nome alterado com sucesso!");
             }
 
         }
@@ -308,7 +333,7 @@ namespace TrabalhoDV.Classes
         private void ExcluirCorrentista()
         {
 
-            Correntista ct = new Correntista();
+            
             Console.WriteLine("Digite o cpf do correntista");
             int cpf = int.Parse(Console.ReadLine());
 
@@ -319,9 +344,26 @@ namespace TrabalhoDV.Classes
             else
             {
                 Console.WriteLine("Correntista inexistente");
+                cpf = int.Parse(Console.ReadLine());
             }
         }
 
+        private void InformacoesBancarias() {
+
+            int randomNumber_Agencia = aleatorio.Next(50000, 100000);
+
+
+            Console.Clear();
+            Console.WriteLine("Informações Bancárias: ");
+
+            Console.WriteLine("Nome: " + ct.Nome);
+            Console.WriteLine("CPF: " + ct.CPF);
+            Console.WriteLine("Agencia: " + ct.agencia);
+            Console.WriteLine("Numero da Conta: " + randomNumber_Agencia);
+            Console.WriteLine("");
+            Console.WriteLine("Saldo: " + ct.saldo);
+
+        }
 
     }
 
