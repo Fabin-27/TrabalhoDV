@@ -1,92 +1,51 @@
-create table Agencia(
-
-id_agencia int identity primary key,
-nome varchar(100) not null,
-numero_agencia bigint unique not null
+CREATE TABLE CORRENTISTA (
+ID_CORRENTISTA INT PRIMARY KEY,
+NOME VARCHAR(100) NOT NULL,
+CPF INT (11) NOT NULL,
+TELEFONE INT(20) NOT NULL
 );
 
-create table Correntista(
-
-id_correntista int identity primary key,
-nome varchar(50) not null,
-cpf bigint unique not null
+CREATE TABLE C_POUPANCA (
+ID_POUPANCA INT PRIMARY KEY,
+CORRENTISTA_ID INT NOT NULL,
+SALDO INT NOT NULL,
+AGENCIA INT NOT NULL,
+FOREIGN KEY (CORRENTISTA_ID) REFERENCES CORRENTISTA(ID_CORRENTISTA)
 );
 
-create table Extrato(
-
-id_extrato int identity primary key,
-valor float not null,
-data date not null,
-agencia_O bigint not null,
-agencia_D bigint not null,
+CREATE TABLE C_CORRENTE (
+ID_CORRENTE INT PRIMARY KEY,
+CORRENTISTA_ID INT NOT NULL,
+SALDO INT NOT NULL,
+AGENCIA INT NOT NULL,
+FOREIGN KEY (CORRENTISTA_ID) REFERENCES CORRENTISTA(ID_CORRENTISTA)
 );
 
-create table Conta(
+INSERT INTO CORRENTISTA VALUES (1, 'LUCAS', 11123598798, 28989797);
+INSERT INTO CORRENTISTA VALUES (2, 'FERNANDO', 34123598798, 28989897);
+INSERT INTO CORRENTISTA VALUES (3, 'IAN', 11129825698, 28985696);
+INSERT INTO CORRENTISTA VALUES (4, 'RONALDO', 11125988798, 28989697);
 
-id_conta int identity primary key,
-tipo char(1) not null,
-numero_conta bigint unique not null,
-saldo float not null,
-agencia_id int not null,
-correntista_id int not null,
-extrato_id int not null,
-foreign key (agencia_id) references Agencia(id_agencia),
-foreign key (correntista_id) references Correntista(id_correntista),
-foreign key (extrato_id) references Extrato(id_extrato)
-);
+INSERT INTO C_POUPANCA  VALUES(1, 3, 100.00, 1234);
+INSERT INTO C_POUPANCA  VALUES(2, 2, 200.00, 1234);
+INSERT INTO C_POUPANCA  VALUES(3, 1, 300.00, 1234);
+INSERT INTO C_POUPANCA  VALUES(4, 4, 500000.00, 4569);
 
-insert into Agencia values ('Rio de Janeiro', 17849);
-insert into Agencia values ('São Paulo', 93745);
-insert into Agencia values ('Minas Gerais', 12345);
-insert into Agencia values ('Espirito Santo', 67894);
-insert into Agencia values ('Bahia', 55377);
-insert into Agencia values ('Amazonia', 91827);
-insert into Agencia values ('Pará', 29887);
+INSERT INTO C_CORRENTE  VALUES(5, 3, 50000.00, 1234);
+INSERT INTO C_CORRENTE  VALUES(6, 2, 3000.00, 1234);
+INSERT INTO C_CORRENTE  VALUES(7, 1, 70000.00, 1234);
+INSERT INTO C_CORRENTE  VALUES(8, 4, 100.00, 4569);
 
-insert into Correntista values ('Ian', 12345678987);
-insert into Correntista values ('Fabio', 12345618987);
-insert into Correntista values ('Kariny', 12315678987);
-insert into Correntista values ('Gustavo', 12345678917);
-insert into Correntista values ('Horacio', 12341678987);
-insert into Correntista values ('Miguel', 32345678987);
-insert into Correntista values ('Davi', 12345478917);
+DELETE FROM C_CORRENTE WHERE CORRENTISTA_ID = 8;
 
-insert into Extrato values (250.0, '15/09/2023', 1234, 1892);
-insert into Extrato values (250.0, '17/08/2023', 4321, 5918);
-insert into Extrato values (250.0, '19/09/2023', 5678, 3746);
-insert into Extrato values (250.0, '20/07/2023', 8765, 1928);
-insert into Extrato values (250.0, '10/01/2023', 9876, 6789);
-insert into Extrato values (250.0, '01/05/2023', 3746, 4321);
-insert into Extrato values (250.0, '02/02/2023', 1928, 9876);
-insert into Extrato values (250.0, '11/10/2023', 5918, 4321);
-insert into Extrato values (250.0, '12/06/2023', 3746, 1234);
-insert into Extrato values (250.0, '16/07/2023', 1892, 9876);
-insert into Extrato values (250.0, '23/03/2023', 6789, 9876);
+UPDATE C_CORRENTE 
+SET AGENCIA = 1234
+WHERE AGENCIA = 4569;
 
-insert into Conta values('c',1234, 215.6, 7, 1, 1);
-insert into Conta values('s',5678, 5000.6, 2, 2, 3);
-insert into Conta values('c',8765, 300.6, 5, 3, 4);
-insert into Conta values('s',9876, 5000.6, 4, 4, 5);
-insert into Conta values('c',6789, 456.6, 6, 5, 11);
-insert into Conta values('s',1928, 5000.6, 1, 6, 7);
-insert into Conta values('c',3746, 550.6, 1, 7, 9);
-insert into Conta values('p',5918, 3000.6, 3, 2, 8);
-insert into Conta values('p',4321, 18000.6, 7, 4, 2);
-insert into Conta values('p',1892, 5000.6, 1, 6, 10);
+CREATE VIEW INFORMACOES AS
+SELECT C.NOME, C.CPF, C.TELEFONE, CP.SALDO, CC.SALDO,  CC.AGENCIA 
+FROM CORRENTISTA AS C, C_POUPANCA AS CP, C_CORRENTE AS CC
+WHERE C.ID_CORRENTISTA = CP.CORRENTISTA_ID
+AND C.ID_CORRENTISTA = CC.CORRENTISTA_ID
 
-select c.nome as nome_Cliente , a.nome as agencia, a.numero_agencia, t.tipo, t.saldo 
-from Conta as t
-inner join Correntista as c
-on id_correntista = correntista_id
-inner join Agencia as a
-on id_agencia = agencia_id;
-
-create view Tabelas as
-select c.nome as nome_Cliente , a.nome as agencia, a.numero_agencia, t.tipo, t.saldo 
-from Conta as t
-inner join Correntista as c
-on id_correntista = correntista_id
-inner join Agencia as a
-on id_agencia = agencia_id;
-
-select * from Tabelas
+SELECT * FROM INFORMACOES
